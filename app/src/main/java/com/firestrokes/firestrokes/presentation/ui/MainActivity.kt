@@ -6,23 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.firestrokes.firestrokes.presentation.components.KeyboardPreview
-import com.firestrokes.firestrokes.presentation.viewmodel.ThemeViewModel
 import com.firestrokes.firestrokes.presentation.ui.theme.FireStrokesTheme
 
 class MainActivity : ComponentActivity() {
@@ -43,28 +36,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainContent() {
-    var showSettings by remember { mutableStateOf(false) }
-    val themeViewModel: ThemeViewModel = viewModel()
-    var hapticEnabled by remember { mutableStateOf(true) }
-    
-    if (showSettings) {
-        SettingsScreen(
-            context = androidx.compose.ui.platform.LocalContext.current,
-            themeViewModel = themeViewModel,
-            hapticFeedbackEnabled = hapticEnabled,
-            onHapticFeedbackToggle = { hapticEnabled = it }
-        )
-    } else {
-        LandingScreen(
-            onOpenSettings = { showSettings = true }
-        )
-    }
-}
-
-@Composable
-fun LandingScreen(
-    onOpenSettings: () -> Unit
-) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -89,12 +60,6 @@ fun LandingScreen(
         
         Spacer(modifier = Modifier.height(32.dp))
         
-        Button(onClick = onOpenSettings) {
-            Text("Settings")
-        }
-        
-        Spacer(modifier = Modifier.height(32.dp))
-        
         Text(
             text = "Keyboard Preview",
             style = MaterialTheme.typography.titleMedium,
@@ -104,5 +69,31 @@ fun LandingScreen(
         Spacer(modifier = Modifier.height(16.dp))
         
         KeyboardPreview()
+        
+        Spacer(modifier = Modifier.height(32.dp))
+        
+        Text(
+            text = "To enable the keyboard:",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        
+        Text(
+            text = "1. Go to Settings → System → Languages & input",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        
+        Text(
+            text = "2. Enable FireStrokes",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        
+        Text(
+            text = "3. Select FireStrokes when typing",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
